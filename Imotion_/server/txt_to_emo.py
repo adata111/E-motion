@@ -1,10 +1,15 @@
 # Using the trained model for making predictions
+# from server.image_captioning import image2caption
 import pandas as pd
 from nltk.corpus import stopwords
 from textblob import Word
 import pickle
 from flask import Flask, request, render_template,jsonify
+from flask_cors import CORS
 import sys
+
+# sys.path.append('../')
+# import image_captioning
 
 file = './server/text_to_emotion/count_vector.sav'
 count_vect = pickle.load(open(file, 'rb'))
@@ -57,7 +62,7 @@ def generate_emo(txt):
     for i in txt:
         if i==4:
             print('Happiness')
-            res.append('hapiness')
+            res.append('happiness')
         elif i==6:
             print('Sadness')
             res.append('sadness')
@@ -70,3 +75,20 @@ def generate_emo(txt):
     
     return res
 
+# app = Flask(__name__)
+# CORS(app, supports_credentials=True)
+
+# @app.route('/')
+# def home():
+#     return render_template('index.html')
+
+# @app.route('/res', methods=['GET'])
+# def txt_to_emo():
+#     text = image_captioning.image2caption('../img2.jpg')
+#     print(text)
+#     preds = preprocess(text)
+#     response = generate_emo(preds)
+#     return jsonify(result=response)
+
+# if __name__ == '__main__':
+#     app.run(debug=True, host='0.0.0.0', port=5000)
